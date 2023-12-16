@@ -1,6 +1,5 @@
 'use client'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { Inter } from 'next/font/google'
 import './globals.css'
 
 import React, { useState } from 'react'
@@ -13,16 +12,17 @@ import {
   BellOutlined,
 } from '@ant-design/icons'
 
-import { Badge, Layout, Menu, Button, theme } from 'antd'
+import { Badge, Layout, Menu, Button, theme, ConfigProvider } from 'antd'
 import { useRouter } from 'next/navigation'
 const { Header, Sider, Content } = Layout
-
-const inter = Inter({ subsets: ['latin'] })
 
 const queryClient = new QueryClient()
 
 export default function RootLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
+  // const [darkModeEnabled, setDarkModeEnabled] = useState(false)
+
+  // const { defaultAlgorithm, darkAlgorithm } = theme
 
   const router = useRouter()
 
@@ -32,7 +32,12 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
+        {/* <ConfigProvider
+          theme={{
+            algorithm: darkModeEnabled ? darkAlgorithm : defaultAlgorithm,
+          }}
+        > */}
         <QueryClientProvider client={queryClient}>
           <Layout
             style={{
@@ -134,6 +139,11 @@ export default function RootLayout({ children }) {
                   }}
                 />
                 <span className="pr-4">
+                  {/* <Button
+                      onClick={() => setDarkModeEnabled((state) => !state)}
+                    >
+                      Change Theme {darkModeEnabled ? 'Dark' : 'Light'}
+                    </Button> */}
                   <Badge count={5}>
                     <Button
                       type="text"
@@ -147,9 +157,8 @@ export default function RootLayout({ children }) {
                 </span>
               </Header>
               <Content
+                className="shadow-md m-4 p-6"
                 style={{
-                  margin: '24px 16px',
-                  padding: 24,
                   minHeight: 280,
                   background: colorBgContainer,
                   borderRadius: borderRadiusLG,
@@ -160,6 +169,7 @@ export default function RootLayout({ children }) {
             </Layout>
           </Layout>
         </QueryClientProvider>
+        {/* </ConfigProvider> */}
       </body>
     </html>
   )
