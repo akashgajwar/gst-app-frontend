@@ -13,12 +13,15 @@ import {
 } from '@ant-design/icons'
 
 import { Badge, Layout, Menu, Button, theme } from 'antd'
+import { useRouter } from 'next/navigation'
 const { Header, Sider, Content } = Layout
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
+
+  const router = useRouter()
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -37,8 +40,8 @@ export default function RootLayout({ children }) {
             collapsible
             collapsed={collapsed}
             className="pt-14"
+            width={250}
           >
-            <div className="demo-logo-vertical" />
             <Menu
               theme="dark"
               mode="inline"
@@ -47,17 +50,62 @@ export default function RootLayout({ children }) {
                 {
                   key: '1',
                   icon: <UserOutlined />,
-                  label: 'Dashboard',
+                  label: 'Return Filing',
+                  onClick: () => router.push('/returns'),
                 },
                 {
                   key: '2',
                   icon: <VideoCameraOutlined />,
-                  label: 'Profile',
+                  label: 'Annual Return',
+                  onClick: () => router.push('/annual-returns'),
                 },
                 {
                   key: '3',
                   icon: <UploadOutlined />,
-                  label: 'Payment',
+                  label: 'Refunds',
+                  onClick: () => router.push('/refunds'),
+                },
+                {
+                  key: '4',
+                  icon: <UploadOutlined />,
+                  label: 'Amendments',
+                  onClick: () => router.push('/amendments'),
+                },
+                {
+                  key: '5',
+                  icon: <UploadOutlined />,
+                  label: 'Other Filings',
+                  onClick: () => router.push('/other'),
+                },
+                {
+                  key: '6',
+                  icon: <UploadOutlined />,
+                  label: 'LUT Application',
+                  onClick: () => router.push('/lut'),
+                },
+                {
+                  key: '7',
+                  icon: <UploadOutlined />,
+                  label: 'Apply for Cancellation',
+                  onClick: () => router.push('/apply'),
+                },
+                {
+                  key: '8',
+                  icon: <UploadOutlined />,
+                  label: 'Final Return',
+                  onClick: () => router.push('/final'),
+                },
+                {
+                  key: '9',
+                  icon: <UploadOutlined />,
+                  label: 'Download',
+                  onClick: () => router.push('/download'),
+                },
+                {
+                  key: '10',
+                  icon: <UploadOutlined />,
+                  label: 'Service Request',
+                  onClick: () => router.push('/requests'),
                 },
               ]}
             />
@@ -79,7 +127,7 @@ export default function RootLayout({ children }) {
                   height: 64,
                 }}
               />
-              <span>
+              <span className="pr-4">
                 <Badge count={5}>
                   <Button
                     type="text"
