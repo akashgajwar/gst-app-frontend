@@ -67,6 +67,7 @@ const Refunds = () => {
               rules={[{ required: true, message: 'Please upload a file!' }]}
             >
               <Upload
+                maxCount={1}
                 accept=".pdf,.doc,.docx,.xls,.xlsx"
                 beforeUpload={() => false}
                 progress={{
