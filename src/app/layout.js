@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from 'react-query'
 import './globals.css'
+import 'bootstrap/dist/css/bootstrap.css'
 
 import React, { useState } from 'react'
 import {
@@ -49,7 +50,7 @@ export default function RootLayout({ children }) {
               trigger={null}
               collapsible
               collapsed={collapsed}
-              className="pt-14"
+              className="pt-5"
               width={250}
             >
               <Menu
@@ -122,7 +123,7 @@ export default function RootLayout({ children }) {
             </Sider>
             <Layout>
               <Header
-                className="flex justify-between p-0"
+                className="d-flex justify-content-between px-3"
                 style={{
                   background: colorBgContainer,
                 }}
@@ -158,7 +159,7 @@ export default function RootLayout({ children }) {
                 </span>
               </Header>
               <Content
-                className="shadow-md m-4 p-6"
+                className="shadow m-4 p-4"
                 style={{
                   minHeight: 280,
                   background: colorBgContainer,
