@@ -1,19 +1,5 @@
 'use client'
 
-import { getUser } from '@/services/auth'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import {
-  theme,
-  Menu,
-  Button,
-  Badge,
-  Layout,
-  Row,
-  Skeleton,
-  Typography,
-} from 'antd'
-
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -22,6 +8,22 @@ import {
   UserOutlined,
   BellOutlined,
 } from '@ant-design/icons'
+import {
+  theme,
+  Menu,
+  Button,
+  Badge,
+  Layout,
+  Skeleton,
+  Dropdown,
+  Typography,
+} from 'antd'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+
+import { getUser } from '@/services/auth'
+
+const { Title } = Typography
 
 const { Header, Content, Sider } = Layout
 
@@ -34,6 +36,11 @@ const DashboardLayout = ({ children }) => {
   } = theme.useToken()
 
   const router = useRouter()
+
+  const signOut = () => {
+    localStorage.setItem('token', undefined)
+    router.push('/')
+  }
 
   useEffect(() => {
     async function me() {
@@ -162,7 +169,24 @@ const DashboardLayout = ({ children }) => {
                 icon={<BellOutlined className="text-lg" color="#000" />}
               />
             </Badge>
-            <Button type="text" icon={<UserOutlined className="text-lg" />} />
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: <Title level={5}>Profile</Title>,
+                    key: '1',
+                    onClick: () => alert('Profile'),
+                  },
+                  {
+                    label: <Title level={5}>Logout</Title>,
+                    key: '2',
+                    onClick: signOut,
+                  },
+                ],
+              }}
+            >
+              <Button type="text" icon={<UserOutlined className="text-lg" />} />
+            </Dropdown>
           </span>
         </Header>
         <Content

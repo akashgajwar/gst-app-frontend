@@ -7,7 +7,7 @@ export const signIn = async (values) => {
     const res = await axios.post(`${API_URL}/api/auth/local`, values)
     return res.data
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }
 
@@ -21,6 +21,6 @@ export const getUser = async () => {
     })
     return res.data
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }

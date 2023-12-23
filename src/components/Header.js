@@ -1,18 +1,17 @@
-import React, { useState } from 'react'
-import { Badge, Header as HeaderComponent, theme, Button } from 'antd'
-
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   BellOutlined,
   UserOutlined,
 } from '@ant-design/icons'
+import { Badge, Header as HeaderComponent, theme, Button } from 'antd'
+import React, { useState } from 'react'
 
 const Header = () => {
   const [collapsed, setCollapsed] = useState(false)
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken()
 
   return (

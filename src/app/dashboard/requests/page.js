@@ -1,8 +1,8 @@
 'use client'
 
-import React from 'react'
-import { Typography, Button, Row, Col, Select, Form, Modal, Upload } from 'antd'
 import { UploadOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { Typography, Button, Row, Col, Form, Modal, Upload } from 'antd'
+import React from 'react'
 
 const { confirm } = Modal
 const { Title } = Typography

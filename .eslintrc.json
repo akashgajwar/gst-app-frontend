@@ -1,3 +1,29 @@
 {
-  "extends": "next"
+  "extends": "next",
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "import/order": [
+      2,
+      {
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": ["builtin", "parent", "index"],
+        "groups": [
+          "builtin",
+          "external",
+          "parent",
+          "internal",
+          "unknown",
+          ["index", "sibling"],
+          "type",
+          "object"
+        ],
+        "distinctGroup": false
+      }
+    ]
+  }
 }
