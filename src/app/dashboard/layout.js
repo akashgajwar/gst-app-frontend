@@ -61,6 +61,7 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <Layout
+      className="w-100"
       style={{
         height: '100vh',
       }}

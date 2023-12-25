@@ -89,7 +89,7 @@ const App = () => {
           <Button type="primary" htmlType="submit" loading={isLoading}>
             Submit
           </Button>
-          <Link href={'/forgot'}>Forgot your password?</Link>
+          <Link href={'/otp-login'}>Login via OTP?</Link>
         </Row>
       </Form>
     </Card>
