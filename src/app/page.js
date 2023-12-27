@@ -1,11 +1,22 @@
 'use client'
 
-import { Alert, Typography, Input, Form, Row, Col, Button, Card } from 'antd'
+import {
+  Alert,
+  Typography,
+  Input,
+  Form,
+  Row,
+  Col,
+  Button,
+  Card,
+  Spin,
+} from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useQuery } from 'react-query'
 import React, { useState } from 'react'
 
-import { signIn } from '@/services/auth'
+import { getUser, signIn } from '@/services/auth'
 import { EMAIL_REGEX } from '@/utils/constants'
 
 const { Title } = Typography
@@ -15,6 +26,12 @@ const App = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(undefined)
+  const { isLoading: meLoading } = useQuery({
+    queryKey: 'me',
+    queryFn: getUser,
+    onSuccess: () => router.push('/dashboard/returns'),
+    retry: 1,
+  })
 
   const submitHandler = async (values) => {
     try {
@@ -23,12 +40,16 @@ const App = () => {
       const res = await signIn(values)
       const { jwt } = res
       localStorage.setItem('token', jwt)
-      setIsLoading(false)
       router.push('/dashboard/returns')
+      setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
       setError(error.response.data.error)
     }
+  }
+
+  if (meLoading) {
+    return <Spin size="large" />
   }
 
   return (

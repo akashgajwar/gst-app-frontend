@@ -14,9 +14,9 @@ import {
   Button,
   Badge,
   Layout,
-  Skeleton,
   Dropdown,
   Typography,
+  Spin,
 } from 'antd'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -56,7 +56,7 @@ const DashboardLayout = ({ children }) => {
   }, [])
 
   if (isLoading) {
-    return <Skeleton />
+    return <Spin size="large" />
   }
 
   return (

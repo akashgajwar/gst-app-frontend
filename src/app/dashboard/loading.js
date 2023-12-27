@@ -1,7 +1,7 @@
-import { Skeleton } from 'antd'
+import { Spin } from 'antd'
 
 const Loading = () => {
-  return <Skeleton />
+  return <Spin size="large" />
 }
 
 export default Loading
