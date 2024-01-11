@@ -43,11 +43,10 @@ const OTPLogin = () => {
   const submitHandler = (values) => {
     const mutationFn = otpScreen ? verifyOTP : genOTP;
     mutationFn({ phone, ...values });
+    setError(null);
   };
 
   const isLoading = generatingOTP || verifyingOTP;
-
-  console.log(error);
 
   return (
     <Card className={`shadow ${styles.modal}`}>
