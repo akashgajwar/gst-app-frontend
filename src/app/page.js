@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Alert,
@@ -10,46 +10,48 @@ import {
   Button,
   Card,
   Spin,
-} from 'antd'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useQuery } from 'react-query'
-import React, { useState } from 'react'
+} from "antd";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
 
-import { getUser, signIn } from '@/services/auth'
-import { EMAIL_REGEX } from '@/utils/constants'
+import { getUser, signIn } from "@/services/auth";
+import { EMAIL_REGEX } from "@/utils/constants";
 
-const { Title } = Typography
+const { Title } = Typography;
 
 const App = () => {
-  const [form] = Form.useForm()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(undefined)
+  const [form] = Form.useForm();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+
   const { isLoading: meLoading } = useQuery({
-    queryKey: 'me',
+    queryKey: "me",
     queryFn: getUser,
-    onSuccess: () => router.push('/dashboard/returns'),
+    onSuccess: () => router.push("/dashboard/returns"),
     retry: 1,
-  })
+    enabled: !!localStorage.getItem("token"),
+  });
 
   const submitHandler = async (values) => {
     try {
-      setIsLoading(true)
-      setError(undefined)
-      const res = await signIn(values)
-      const { jwt } = res
-      localStorage.setItem('token', jwt)
-      router.push('/dashboard/returns')
-      setIsLoading(false)
+      setIsLoading(true);
+      setError(undefined);
+      const res = await signIn(values);
+      const { jwt } = res;
+      localStorage.setItem("token", jwt);
+      router.push("/dashboard/returns");
+      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false)
-      setError(error.response.data.error)
+      setIsLoading(false);
+      setError(error.response.data.error);
     }
-  }
+  };
 
   if (meLoading) {
-    return <Spin size="large" />
+    return <Spin size="large" />;
   }
 
   return (
@@ -63,14 +65,14 @@ const App = () => {
         {error && (
           <Alert
             className="w-100"
-            message={error?.message.replace('identifier', 'email')}
+            message={error?.message.replace("identifier", "email")}
             type="error"
             showIcon
           />
         )}
       </Row>
       <Form
-        layout={'vertical'}
+        layout={"vertical"}
         form={form}
         onFinish={submitHandler}
         onChange={() => setError(undefined)}
@@ -81,10 +83,10 @@ const App = () => {
               label="Email"
               name="identifier"
               rules={[
-                { required: true, message: 'Please enter your email.' },
+                { required: true, message: "Please enter your email." },
                 {
                   pattern: EMAIL_REGEX,
-                  message: 'Please enter valid email.',
+                  message: "Please enter valid email.",
                 },
               ]}
             >
@@ -98,7 +100,7 @@ const App = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Please input your password!',
+                  message: "Please input your password!",
                 },
               ]}
             >
@@ -106,15 +108,15 @@ const App = () => {
             </Form.Item>
           </Col>
         </Row>
-        <Row justify={'space-between'} align={'middle'}>
+        <Row justify={"space-between"} align={"middle"}>
           <Button type="primary" htmlType="submit" loading={isLoading}>
             Submit
           </Button>
-          <Link href={'/otp-login'}>Login via OTP?</Link>
+          <Link href={"/otp-login"}>Login via OTP?</Link>
         </Row>
       </Form>
     </Card>
-  )
-}
+  );
+};
 
-export default App
+export default App;
