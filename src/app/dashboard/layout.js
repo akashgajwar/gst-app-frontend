@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   MenuFoldOutlined,
@@ -7,7 +7,7 @@ import {
   VideoCameraOutlined,
   UserOutlined,
   BellOutlined,
-} from '@ant-design/icons'
+} from "@ant-design/icons";
 import {
   theme,
   Menu,
@@ -17,53 +17,53 @@ import {
   Dropdown,
   Typography,
   Spin,
-} from 'antd'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+} from "antd";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-import { getUser } from '@/services/auth'
+import { getUser } from "@/services/auth";
 
-const { Title } = Typography
+const { Title } = Typography;
 
-const { Header, Content, Sider } = Layout
+const { Header, Content, Sider } = Layout;
 
 const DashboardLayout = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [collapsed, setCollapsed] = useState(false)
+  const [isLoading, setIsLoading] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken()
+  } = theme.useToken();
 
-  const router = useRouter()
+  const router = useRouter();
 
   const signOut = () => {
-    localStorage.setItem('token', undefined)
-    router.push('/')
-  }
+    localStorage.removeItem("token");
+    router.push("/");
+  };
 
   useEffect(() => {
     async function me() {
-      const user = await getUser()
+      const user = await getUser();
       if (!user) {
-        router.push('/')
-        return
+        router.push("/");
+        return;
       }
 
-      setIsLoading(false)
+      setIsLoading(false);
     }
-    me()
-  }, [])
+    me();
+  }, []);
 
   if (isLoading) {
-    return <Spin size="large" />
+    return <Spin size="large" />;
   }
 
   return (
     <Layout
       className="w-100"
       style={{
-        height: '100vh',
+        height: "100vh",
       }}
     >
       <Sider
@@ -76,67 +76,67 @@ const DashboardLayout = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={["1"]}
           items={[
             {
-              key: '1',
+              key: "1",
               icon: <UserOutlined />,
-              label: 'Return Filing',
-              onClick: () => router.push('/dashboard/returns'),
+              label: "Return Filing",
+              onClick: () => router.push("/dashboard/returns"),
             },
             {
-              key: '2',
+              key: "2",
               icon: <VideoCameraOutlined />,
-              label: 'Annual Return',
-              onClick: () => router.push('/dashboard/annual-returns'),
+              label: "Annual Return",
+              onClick: () => router.push("/dashboard/annual-returns"),
             },
             {
-              key: '3',
+              key: "3",
               icon: <UploadOutlined />,
-              label: 'Refunds',
-              onClick: () => router.push('/dashboard/refunds'),
+              label: "Refunds",
+              onClick: () => router.push("/dashboard/refunds"),
             },
             {
-              key: '4',
+              key: "4",
               icon: <UploadOutlined />,
-              label: 'Amendments',
-              onClick: () => router.push('/dashboard/amendments'),
+              label: "Amendments",
+              onClick: () => router.push("/dashboard/amendments"),
             },
             {
-              key: '5',
+              key: "5",
               icon: <UploadOutlined />,
-              label: 'Other Filings',
-              onClick: () => router.push('/dashboard/other'),
+              label: "Other Filings",
+              onClick: () => router.push("/dashboard/other"),
             },
             {
-              key: '6',
+              key: "6",
               icon: <UploadOutlined />,
-              label: 'LUT Application',
-              onClick: () => router.push('/dashboard/lut'),
+              label: "LUT Application",
+              onClick: () => router.push("/dashboard/lut"),
             },
             {
-              key: '7',
+              key: "7",
               icon: <UploadOutlined />,
-              label: 'Apply for Cancellation',
-              onClick: () => router.push('/dashboard/apply'),
+              label: "Apply for Cancellation",
+              onClick: () => router.push("/dashboard/apply"),
             },
             {
-              key: '8',
+              key: "8",
               icon: <UploadOutlined />,
-              label: 'Final Return',
-              onClick: () => router.push('/dashboard/final'),
+              label: "Final Return",
+              onClick: () => router.push("/dashboard/final"),
             },
             {
-              key: '9',
+              key: "9",
               icon: <UploadOutlined />,
-              label: 'Download',
-              onClick: () => router.push('/dashboard/download'),
+              label: "Download",
+              onClick: () => router.push("/dashboard/download"),
             },
             {
-              key: '10',
+              key: "10",
               icon: <UploadOutlined />,
-              label: 'Service Request',
-              onClick: () => router.push('/dashboard/requests'),
+              label: "Service Request",
+              onClick: () => router.push("/dashboard/requests"),
             },
           ]}
         />
@@ -153,7 +153,7 @@ const DashboardLayout = ({ children }) => {
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
-              fontSize: '16px',
+              fontSize: "16px",
               width: 64,
               height: 64,
             }}
@@ -175,18 +175,21 @@ const DashboardLayout = ({ children }) => {
                 items: [
                   {
                     label: <Title level={5}>Profile</Title>,
-                    key: '1',
-                    onClick: () => alert('Profile'),
+                    key: "1",
+                    onClick: () => alert("Profile"),
                   },
                   {
                     label: <Title level={5}>Logout</Title>,
-                    key: '2',
+                    key: "2",
                     onClick: signOut,
                   },
                 ],
               }}
             >
-              <Button type="text" icon={<UserOutlined className="text-lg" />} />
+              <Button
+                type="text"
+                icon={<UserOutlined className="text-lg" />}
+              />
             </Dropdown>
           </span>
         </Header>
@@ -202,7 +205,7 @@ const DashboardLayout = ({ children }) => {
         </Content>
       </Layout>
     </Layout>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
