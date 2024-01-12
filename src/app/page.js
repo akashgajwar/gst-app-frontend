@@ -12,42 +12,20 @@ import {
   Spin,
 } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 
-import { getUser, signIn } from "@/services/auth";
 import { EMAIL_REGEX } from "@/utils/constants";
+import { useAuthContext } from "@/context/AuthContext";
 
 const { Title } = Typography;
 
 const App = () => {
   const [form] = Form.useForm();
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(undefined);
-
-  const { isLoading: meLoading } = useQuery({
-    queryKey: "me",
-    queryFn: getUser,
-    onSuccess: () => router.push("/dashboard/returns"),
-    retry: 1,
-    enabled: !!localStorage.getItem("token"),
-  });
+  const { isLoading, error, setError, mutate, meLoading } = useAuthContext();
 
   const submitHandler = async (values) => {
-    try {
-      setIsLoading(true);
-      setError(undefined);
-      const res = await signIn(values);
-      const { jwt } = res;
-      localStorage.setItem("token", jwt);
-      router.push("/dashboard/returns");
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setError(error.response.data.error);
-    }
+    mutate(values);
   };
 
   if (meLoading) {

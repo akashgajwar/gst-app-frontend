@@ -22,14 +22,16 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { getUser } from "@/services/auth";
+import { useAuthContext } from "@/context/AuthContext";
 
 const { Title } = Typography;
 
 const { Header, Content, Sider } = Layout;
 
 const DashboardLayout = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
+
+  const { isLoading, signOut } = useAuthContext();
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -37,22 +39,11 @@ const DashboardLayout = ({ children }) => {
 
   const router = useRouter();
 
-  const signOut = () => {
-    localStorage.removeItem("token");
-    router.push("/");
-  };
-
   useEffect(() => {
-    async function me() {
-      const user = await getUser();
-      if (!user) {
-        router.push("/");
-        return;
-      }
-
-      setIsLoading(false);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/");
     }
-    me();
   }, []);
 
   if (isLoading) {
