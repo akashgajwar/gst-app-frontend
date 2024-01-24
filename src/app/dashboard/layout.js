@@ -129,6 +129,12 @@ const DashboardLayout = ({ children }) => {
               label: "Service Request",
               onClick: () => router.push("/dashboard/requests"),
             },
+            {
+              key: "11",
+              icon: <UploadOutlined />,
+              label: "Payments",
+              onClick: () => router.push("/dashboard/payments"),
+            },
           ]}
         />
       </Sider>
@@ -177,10 +183,7 @@ const DashboardLayout = ({ children }) => {
                 ],
               }}
             >
-              <Button
-                type="text"
-                icon={<UserOutlined className="text-lg" />}
-              />
+              <Button type="text" icon={<UserOutlined className="text-lg" />} />
             </Dropdown>
           </span>
         </Header>
