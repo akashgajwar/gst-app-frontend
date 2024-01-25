@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from "react";
 
 const Amendments = () => {
-  return <div>Amendments</div>
-}
+  const [test, setTest] = useState(false);
+  return <div>Amendments</div>;
+};
 
-export default Amendments
+export default Amendments;

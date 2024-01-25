@@ -1,29 +1,41 @@
-'use client'
+"use client";
 
-import { UploadOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import { Typography, Button, Row, Col, Select, Form, Modal, Upload } from 'antd'
-import React from 'react'
+import { UploadOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  Typography,
+  Button,
+  Row,
+  Col,
+  Input,
+  Select,
+  Form,
+  Modal,
+  Upload,
+} from "antd";
+import React from "react";
 
-const { confirm } = Modal
-const { Title } = Typography
+const { confirm } = Modal;
+const { Title } = Typography;
 
 const LUT = () => {
-  const [form] = Form.useForm()
-  const currYear = new Date().getFullYear() - 2
+  const [form] = Form.useForm();
+  const currYear = new Date().getFullYear() - 2;
 
   const types = [
-    { value: 'GSTR-1', label: 'GSTR-1' },
-    { value: 'GSTR-3B' - 1, label: 'GSTR-3B' },
-  ]
+    { value: "GSTR-1", label: "GSTR-1" },
+    { value: "GSTR-3B" - 1, label: "GSTR-3B" },
+  ];
 
   const yearsList = Array.from({ length: 4 }, (_, index) => ({
     value: currYear + index,
-    label: `${currYear + index}-${(currYear + index + 1).toString().slice(-2)}`,
-  }))
+    label: `${currYear + index}-${(currYear + index + 1)
+      .toString()
+      .slice(-2)}`,
+  }));
 
   const submitHandler = (values) => {
-    console.log(values)
-  }
+    console.log(values);
+  };
 
   return (
     <>
@@ -31,16 +43,16 @@ const LUT = () => {
         <Title level={3}>LUT Application</Title>
       </Row>
       <Form
-        layout={'vertical'}
+        layout={"vertical"}
         form={form}
         onFinish={(values) =>
           confirm({
             icon: <ExclamationCircleOutlined />,
-            title: 'Do you want to proceed?',
+            title: "Do you want to proceed?",
             content:
-              'Please press Ok to continue or Cancel to confirm all the details before submitting.',
+              "Please press Ok to continue or Cancel to confirm all the details before submitting.",
             onOk() {
-              submitHandler(values)
+              submitHandler(values);
             },
             onCancel() {},
           })
@@ -54,7 +66,7 @@ const LUT = () => {
               label="Financial Year"
               name="year"
               rules={[
-                { required: true, message: 'Please select a financial year!' },
+                { required: true, message: "Please select a financial year!" },
               ]}
             >
               <Select
@@ -69,7 +81,7 @@ const LUT = () => {
             <Form.Item
               label="Upload documents"
               name="files"
-              rules={[{ required: true, message: 'Please upload a file!' }]}
+              rules={[{ required: true, message: "Please upload a file!" }]}
             >
               <Upload
                 maxCount={1}
@@ -77,8 +89,8 @@ const LUT = () => {
                 beforeUpload={() => false}
                 progress={{
                   strokeColor: {
-                    '0%': '#108ee9',
-                    '100%': '#87d068',
+                    "0%": "#108ee9",
+                    "100%": "#87d068",
                   },
                   strokeWidth: 3,
                   format: (percent) =>
@@ -89,6 +101,11 @@ const LUT = () => {
               </Upload>
             </Form.Item>
           </Col>
+          <Col className="mt-4" span={24}>
+            <Form.Item label="Note" name="note">
+              <Input.TextArea className="w-50" />
+            </Form.Item>
+          </Col>
         </Row>
         <Row>
           <Button type="primary" htmlType="submit">
@@ -97,7 +114,7 @@ const LUT = () => {
         </Row>
       </Form>
     </>
-  )
-}
+  );
+};
 
-export default LUT
+export default LUT;

@@ -1,30 +1,42 @@
-'use client'
+"use client";
 
-import { UploadOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import { Typography, Button, Row, Col, Select, Form, Modal, Upload } from 'antd'
-import React from 'react'
+import { UploadOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  Typography,
+  Button,
+  Row,
+  Col,
+  Select,
+  Input,
+  Form,
+  Modal,
+  Upload,
+} from "antd";
+import React from "react";
 
-const { confirm } = Modal
-const { Title } = Typography
+const { confirm } = Modal;
+const { Title } = Typography;
 
 const OtherFilings = () => {
-  const [form] = Form.useForm()
-  const currYear = new Date().getFullYear() - 2
+  const [form] = Form.useForm();
+  const currYear = new Date().getFullYear() - 2;
 
   const types = [
-    { value: 'ITC-04', label: 'ITC-04' },
-    { value: 'DRC-03' - 1, label: 'DRC-03' },
-    { value: 'Notices' - 1, label: 'Notices' },
-  ]
+    { value: "ITC-04", label: "ITC-04" },
+    { value: "DRC-03" - 1, label: "DRC-03" },
+    { value: "Notices" - 1, label: "Notices" },
+  ];
 
   const yearsList = Array.from({ length: 4 }, (_, index) => ({
     value: currYear + index,
-    label: `${currYear + index}-${(currYear + index + 1).toString().slice(-2)}`,
-  }))
+    label: `${currYear + index}-${(currYear + index + 1)
+      .toString()
+      .slice(-2)}`,
+  }));
 
   const submitHandler = (values) => {
-    console.log(values)
-  }
+    console.log(values);
+  };
 
   return (
     <>
@@ -32,16 +44,16 @@ const OtherFilings = () => {
         <Title level={3}>Other Filings</Title>
       </Row>
       <Form
-        layout={'vertical'}
+        layout={"vertical"}
         form={form}
         onFinish={(values) =>
           confirm({
             icon: <ExclamationCircleOutlined />,
-            title: 'Do you want to proceed?',
+            title: "Do you want to proceed?",
             content:
-              'Please press Ok to continue or Cancel to confirm all the details before submitting.',
+              "Please press Ok to continue or Cancel to confirm all the details before submitting.",
             onOk() {
-              submitHandler(values)
+              submitHandler(values);
             },
             onCancel() {},
           })
@@ -54,7 +66,7 @@ const OtherFilings = () => {
             <Form.Item
               label="GST Type"
               name="type"
-              rules={[{ required: true, message: 'Please select a type!' }]}
+              rules={[{ required: true, message: "Please select a type!" }]}
             >
               <Select
                 style={{
@@ -69,7 +81,7 @@ const OtherFilings = () => {
               label="Financial Year"
               name="financialYear"
               rules={[
-                { required: true, message: 'Please select a financial year!' },
+                { required: true, message: "Please select a financial year!" },
               ]}
             >
               <Select
@@ -84,7 +96,7 @@ const OtherFilings = () => {
             <Form.Item
               label="Upload documents"
               name="files"
-              rules={[{ required: true, message: 'Please upload a file!' }]}
+              rules={[{ required: true, message: "Please upload a file!" }]}
             >
               <Upload
                 maxCount={1}
@@ -92,8 +104,8 @@ const OtherFilings = () => {
                 beforeUpload={() => false}
                 progress={{
                   strokeColor: {
-                    '0%': '#108ee9',
-                    '100%': '#87d068',
+                    "0%": "#108ee9",
+                    "100%": "#87d068",
                   },
                   strokeWidth: 3,
                   format: (percent) =>
@@ -104,6 +116,11 @@ const OtherFilings = () => {
               </Upload>
             </Form.Item>
           </Col>
+          <Col className="mt-4" span={24}>
+            <Form.Item label="Note" name="note">
+              <Input.TextArea className="w-50" />
+            </Form.Item>
+          </Col>
         </Row>
         <Row>
           <Button type="primary" htmlType="submit">
@@ -112,7 +129,7 @@ const OtherFilings = () => {
         </Row>
       </Form>
     </>
-  )
-}
+  );
+};
 
-export default OtherFilings
+export default OtherFilings;
