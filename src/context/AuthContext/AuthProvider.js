@@ -1,15 +1,16 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import { signIn, getUser } from "@/services/auth";
 
-import AuthContext, { initialState } from "./AuthContext";
+import AuthContext from "./AuthContext";
 import { localStorage } from "@/utils/helpers";
 
 function useAuth() {
   const [user, setUser] = useState(null);
   const router = useRouter();
+  const path = usePathname();
   const [error, setError] = useState(undefined);
 
   const { isLoading: meLoading } = useQuery({
@@ -17,7 +18,7 @@ function useAuth() {
     queryFn: getUser,
     onSuccess: (data) => {
       setUser(data.user);
-      router.push("/dashboard/returns");
+      router.push(path || "/dashboard/returns");
     },
     onError: (error) => {
       router.push("/");

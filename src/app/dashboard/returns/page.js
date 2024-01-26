@@ -13,7 +13,6 @@ import {
   Upload,
 } from "antd";
 import { useState } from "react";
-import axios from "axios";
 
 import { uploadFile, deleteFile } from "@/services/file";
 const { confirm } = Modal;

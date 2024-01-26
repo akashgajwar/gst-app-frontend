@@ -18,10 +18,10 @@ import {
   Typography,
   Spin,
 } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { getUser } from "@/services/auth";
+import { NAV_ITEMS } from "@/utils/constants";
 import { useAuthContext } from "@/context/AuthContext";
 
 const { Title } = Typography;
@@ -38,6 +38,7 @@ const DashboardLayout = ({ children }) => {
   } = theme.useToken();
 
   const router = useRouter();
+  const path = usePathname();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -49,6 +50,10 @@ const DashboardLayout = ({ children }) => {
   if (isLoading) {
     return <Spin size="large" />;
   }
+
+  const defaultSelectedKeys = NAV_ITEMS.findIndex(
+    (item) => item.path === path
+  );
 
   return (
     <Layout
@@ -67,75 +72,12 @@ const DashboardLayout = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "Return Filing",
-              onClick: () => router.push("/dashboard/returns"),
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "Annual Return",
-              onClick: () => router.push("/dashboard/annual-returns"),
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "Refunds",
-              onClick: () => router.push("/dashboard/refunds"),
-            },
-            {
-              key: "4",
-              icon: <UploadOutlined />,
-              label: "Amendments",
-              onClick: () => router.push("/dashboard/amendments"),
-            },
-            {
-              key: "5",
-              icon: <UploadOutlined />,
-              label: "Other Filings",
-              onClick: () => router.push("/dashboard/other"),
-            },
-            {
-              key: "6",
-              icon: <UploadOutlined />,
-              label: "LUT Application",
-              onClick: () => router.push("/dashboard/lut"),
-            },
-            {
-              key: "7",
-              icon: <UploadOutlined />,
-              label: "Apply for Cancellation",
-              onClick: () => router.push("/dashboard/apply"),
-            },
-            {
-              key: "8",
-              icon: <UploadOutlined />,
-              label: "Final Return",
-              onClick: () => router.push("/dashboard/final"),
-            },
-            {
-              key: "9",
-              icon: <UploadOutlined />,
-              label: "Download",
-              onClick: () => router.push("/dashboard/download"),
-            },
-            {
-              key: "10",
-              icon: <UploadOutlined />,
-              label: "Service Request",
-              onClick: () => router.push("/dashboard/requests"),
-            },
-            {
-              key: "11",
-              icon: <UploadOutlined />,
-              label: "Payments",
-              onClick: () => router.push("/dashboard/payments"),
-            },
-          ]}
+          defaultSelectedKeys={[defaultSelectedKeys.toString()]}
+          items={NAV_ITEMS.map(({ label, path }, index) => ({
+            key: index,
+            label,
+            onClick: () => router.push(path),
+          }))}
         />
       </Sider>
       <Layout>
