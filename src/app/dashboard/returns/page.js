@@ -3,6 +3,7 @@
 import { UploadOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import {
   Typography,
+  Input,
   Button,
   Row,
   Col,
@@ -144,6 +145,11 @@ const Returns = () => {
               >
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
               </Upload>
+            </Form.Item>
+          </Col>
+          <Col className="mt-4" span={24}>
+            <Form.Item label="Note" name="note">
+              <Input.TextArea className="w-50" />
             </Form.Item>
           </Col>
         </Row>

@@ -12,8 +12,7 @@ import {
   Spin,
 } from "antd";
 import Link from "next/link";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import React from "react";
 
 import { EMAIL_REGEX } from "@/utils/constants";
 import { useAuthContext } from "@/context/AuthContext";
