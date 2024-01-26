@@ -183,7 +183,10 @@ const DashboardLayout = ({ children }) => {
                 ],
               }}
             >
-              <Button type="text" icon={<UserOutlined className="text-lg" />} />
+              <Button
+                type="text"
+                icon={<UserOutlined className="text-lg" />}
+              />
             </Dropdown>
           </span>
         </Header>

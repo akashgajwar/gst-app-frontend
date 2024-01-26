@@ -2,21 +2,10 @@
 import React from "react";
 import axios from "axios";
 
-function App() {
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  }
+import { Button } from "antd";
 
+import { loadScript } from "@/utils/helpers";
+function App() {
   async function displayRazorpay() {
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
@@ -28,7 +17,7 @@ function App() {
     }
 
     const options = {
-      key: "rzp_test_EntYKvlELQfvjM", // Enter the Key ID generated from the Dashboard
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
       amount: 500,
       currency: "INR",
       name: "Soumya Corp.",
@@ -65,12 +54,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>Buy React now!</p>
-        <button className="App-link" onClick={displayRazorpay}>
-          Pay ₹500
-        </button>
-      </header>
+      <Button type="primary" onClick={displayRazorpay}>
+        Pay ₹500
+      </Button>
     </div>
   );
 }
