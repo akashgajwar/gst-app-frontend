@@ -1,98 +1,91 @@
 "use client";
 
-import { UploadOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Typography, Button, Row, Col, Form, Modal, Upload } from "antd";
-import React from "react";
+import { Input, Typography, Button, Row, Space, Table, Modal } from "antd";
+import React, { useState } from "react";
 
-const { confirm } = Modal;
 const { Title } = Typography;
+
+const columns = [
+  {
+    title: "Query",
+    dataIndex: "query",
+    key: "query",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Answer",
+    dataIndex: "answer",
+    key: "answer",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: () => (
+      <Space size="middle">
+        <a>Edit</a>
+      </Space>
+    ),
+  },
+];
 
 const data = [
   {
-    query: "Lorem ipsum",
-    answer: "Dolor set amet",
-    status: "processing",
+    query: "I am not able to subit my PDF",
+    answer: "Please upload the fresh documents again",
+    action: [],
   },
   {
-    query: "Lorem ipsum",
-    answer: "Dolor set amet",
-    status: "resolved",
+    query: "I am not able to subit my PDF",
+    answer: "Please upload the fresh documents again",
+    action: [],
   },
   {
-    query: "Lorem ipsum",
-    answer: "Dolor set amet",
-    status: "processing",
-  },
-  {
-    query: "Lorem ipsum",
-    answer: "Dolor set amet",
-    status: "processing",
+    query: "I am not able to subit my PDF",
+    answer: "Please upload the fresh documents again",
+    action: [],
   },
 ];
 
 const ServiceRequests = () => {
-  const [form] = Form.useForm();
-  const currYear = new Date().getFullYear() - 2;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState();
 
-  const submitHandler = (values) => {
-    console.log(values);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    console.log(inputValue);
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <>
-      <Row className="mb-3">
-        <Title level={3}>Create Service Request</Title>
+      <Row className="mb-3" justify="space-between">
+        <Title level={3}>Service Request</Title>
+        <Button type="primary" onClick={showModal}>
+          Create Request
+        </Button>
       </Row>
-      <Form
-        layout={"vertical"}
-        form={form}
-        onFinish={(values) =>
-          confirm({
-            icon: <ExclamationCircleOutlined />,
-            title: "Do you want to proceed?",
-            content:
-              "Please press Ok to continue or Cancel to confirm all the details before submitting.",
-            onOk() {
-              submitHandler(values);
-            },
-            onCancel() {},
-          })
-        }
-        // initialValues={{ layout: formLayout }}
-        // style={{ maxWidth: formLayout === 'inline' ? 'none' : 600 }}
+      <Table columns={columns} dataSource={data} />
+      <Modal
+        title="Create request"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
       >
-        <Row>
-          <Col className="mt-4" span={24}>
-            <Form.Item
-              label="Upload documents"
-              name="files"
-              rules={[{ required: true, message: "Please upload a file!" }]}
-            >
-              <Upload
-                maxCount={1}
-                accept=".pdf,.doc,.docx,.xls,.xlsx"
-                beforeUpload={() => false}
-                progress={{
-                  strokeColor: {
-                    "0%": "#108ee9",
-                    "100%": "#87d068",
-                  },
-                  strokeWidth: 3,
-                  format: (percent) =>
-                    percent && `${parseFloat(percent.toFixed(2))}%`,
-                }}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Row>
-      </Form>
+        <Input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          class="w-100 p-3"
+        />
+      </Modal>
     </>
   );
 };

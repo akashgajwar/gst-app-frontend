@@ -21,7 +21,7 @@ function useAuth() {
     },
     onError: (error) => {
       router.push("/");
-      setError(error.response.data.error);
+      setError(error?.response?.data?.error);
     },
     retry: 1,
     enabled: !!localStorage.getItem("token"),
