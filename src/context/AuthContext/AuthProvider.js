@@ -3,48 +3,53 @@ import { useQuery, useMutation } from "react-query";
 import { useRouter, usePathname } from "next/navigation";
 
 import { signIn, getUser } from "@/services/auth";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 import AuthContext from "./AuthContext";
-import { localStorage } from "@/utils/helpers";
 
 function useAuth() {
   const [user, setUser] = useState(null);
   const router = useRouter();
   const path = usePathname();
   const [error, setError] = useState(undefined);
+  const route = path.includes("dashboard") ? path : "/dashboard/returns";
+
+  const [token, setToken] = useLocalStorage("token", undefined);
 
   const { isLoading: meLoading } = useQuery({
     queryKey: "me",
     queryFn: getUser,
     onSuccess: (data) => {
       setUser(data.user);
-      router.push(path || "/dashboard/returns");
+      router.push(route);
     },
     onError: (error) => {
       router.push("/");
       setError(error?.response?.data?.error);
     },
-    retry: 1,
-    enabled: !!localStorage.getItem("token"),
+    retry: false,
+    enabled: Boolean(token),
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (!token) {
       router.push("/");
+    } else {
+      router.push(route);
     }
   }, []);
 
   const signOut = () => {
-    localStorage.removeItem("token");
+    setToken();
     router.push("/");
+    setError();
   };
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isLoading, data: jwtData } = useMutation({
     mutationKey: "signIn",
     mutationFn: signIn,
     onSuccess: ({ jwt }) => {
-      localStorage.setItem("token", jwt);
+      setToken(jwt);
       router.push("/dashboard/returns");
     },
     onError: (error) => setError(error.response.data.error),

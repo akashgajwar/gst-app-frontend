@@ -19,5 +19,3 @@ export function loadScript(url) {
     document.body.appendChild(script);
   });
 }
-
-export const localStorage = !isSSR ? window.localStorage : storageMock;
