@@ -34,3 +34,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Style Guide
+
+This project follows a specific style guide to maintain code consistency and readability.
+
+### Formatting
+
+- Use Prettier for code formatting.
+- Ensure consistent indentation (2 spaces).
+
+### Naming Conventions
+
+- Variables and functions: `camelCase`
+- Components: `PascalCase`
+- CSS classes: `kebab-case`
+
+### Linting
+
+- ESLint is configured to enforce best practices and identify potential issues.
+- Please address all linting warnings and errors before committing.
